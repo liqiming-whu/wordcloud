@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
+import os
 from Bio import Entrez, Medline
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
 Entrez.email = "liqiming1914658215@gmail.com"
 Entrez.api_key = "c80ce212c7179f0bbfbd88495a91dd356708"
+stopwords = set(line.rstrip() for line in open("stopwords.txt"))
 
 
 def get_count(database, term):
@@ -43,7 +45,13 @@ def save_text(text):
 
 
 def wordcloud(text):
-    wordcloud = WordCloud(background_color="white",width=1000, height=860, margin=2).generate(text)
+    """
+    params:
+    stopwords:set, default:None
+    collections:Include binary phrases or not
+    """
+    wordcloud = WordCloud(background_color="white", stopwords=stopwords,
+                          collocations=False, width=1000, height=860, margin=2).generate(text.lower())
     plt.imshow(wordcloud)
     plt.axis("off")
     plt.show()
@@ -51,11 +59,15 @@ def wordcloud(text):
 
 
 def main():
-    count = get_count("pubmed", "Bladder cancer")
-    print("count:", count)
-    _, idlist = search("pubmed", "Bladder cancer", count)
-    text = get_abstract("pubmed", idlist)
-    save_text(text)
+    if(os.path.exists("result.txt")):
+        text = open("result.txt").read()
+        print("results laoded.")
+    else:
+        count = get_count("pubmed", "Bladder cancer")
+        print("count:", count)
+        _, idlist = search("pubmed", "Bladder cancer", count)
+        text = get_abstract("pubmed", idlist)
+        save_text(text)
     wordcloud(text)
 
 
