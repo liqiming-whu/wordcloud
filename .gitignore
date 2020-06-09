@@ -9,3 +9,4 @@ __pycache__/
 
 result.txt
 wordcloud.png
+*.xml
