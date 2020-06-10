@@ -23,7 +23,7 @@ def read_abstract(path):
 def get_stopwords(text):
     words = word_tokenize(clean_str(text))
     fdist = FreqDist(words)
-    stopwords = fdist.most_common(500)
+    stopwords = fdist.most_common(200)
     print(stopwords)
     with open("stopwords.txt", "w", encoding="utf-8") as f:
         for word in stopwords:

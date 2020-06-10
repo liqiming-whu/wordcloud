@@ -50,7 +50,7 @@ def replace_tags(text, reverse=False):
     return text
 
 
-def search_pubmed(journal, mindate, maxdate, email=user_email, retmax=200):
+def search_pubmed(journal, mindate, maxdate, email=user_email, retmax=500):
     e = Esearcher('Esearch', email)
     res = e.inquire({
         'db': 'pubmed',
@@ -80,7 +80,7 @@ def search(journal, mindate, maxdate, outfile):
 
 
 if __name__ == '__main__':
-    date = ['2015\01\01', '2016\01\01', '2017\01\01', '2018\01\01', '2019\01\01', '2020\01\01']
+    date = ['1990\01\01', '2000\01\01', '2010\01\01', '2020\01\01']
 
     for mindate, maxdate in zip(date[:-1], date[1:]):
         search("Nature[ta] OR Science[ta] OR Cell[ta]",

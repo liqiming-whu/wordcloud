@@ -4,12 +4,13 @@ from Bio import Entrez, Medline
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
+
 Entrez.email = "liqiming1914658215@gmail.com"
 Entrez.api_key = "c80ce212c7179f0bbfbd88495a91dd356708"
+
 stopwords = set(line.rstrip() for line in open("stopwords.txt"))
-stopwords.update(["CONCLUSION", "OBJECTIVE", "PURPOSE", "BACKGROUND", "METHOD", "METHODS", "MATERIAL","CONCLUSIONS",
-                  "study", "follow", "performed", "evaluated", "remain", "revealed",
-                  "included", "based", "studie", "There", "month", "who"])
+add = set(line.rstrip() for line in open("stopwords_add.txt"))
+stopwords = stopwords | add
 
 
 def get_count(database, term):
