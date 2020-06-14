@@ -37,6 +37,7 @@ def get_abstract(database, idlist):
             pmid = str(record.get("PMID", "?"))
             print("pmid:", pmid)
             abstract = record.get("AB", "?")
+            abstract = " ".join(list(set(abstract.split())))
             text += abstract
         except:
             continue
@@ -54,12 +55,12 @@ def wordcloud(text):
     stopwords:set, default:None
     collections:Include binary phrases or not
     """
-    wordcloud = WordCloud(background_color="white", stopwords=stopwords,
+    wordcloud = WordCloud(background_color="white", stopwords=stopwords, scale=4,
                           collocations=False, width=1000, height=750, margin=2).generate(text)
     plt.imshow(wordcloud)
     plt.axis("off")
     plt.show()
-    wordcloud.to_file("wordcloud.png")
+    wordcloud.to_file("bladder_cancer.pdf")
 
 
 def main():
